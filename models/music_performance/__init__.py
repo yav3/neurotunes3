@@ -62,3 +62,24 @@ from .stage_acoustics import (
     VenueProfile, estimate_rt60, clarity_c80, definition_d50,
     center_time, bass_ratio, stage_support, analyze_venue,
 )
+from .performance_metrics import (
+    PerformanceScore, timing_accuracy, pitch_accuracy,
+    dynamic_fidelity, articulation_score as perf_articulation_score,
+    tempo_stability as perf_tempo_stability, rhythmic_evenness,
+    ProgressTracker as MetricsProgressTracker,
+)
+from .expression_analysis import (
+    ArticulationType as ExprArticulationType, NoteEvent,
+    RubatoSegment, detect_rubato, rubato_amount,
+    DynamicShape, detect_dynamic_shapes, dynamic_range,
+    classify_articulation as classify_expr_articulation,
+    articulation_profile, VibratoAnalysis, analyze_vibrato,
+    expressive_timing_deviation,
+)
+from .ensemble_sync import (
+    PerformerTrack, SyncMetrics, inter_onset_alignment,
+    pairwise_sync_matrix, granger_precedence, detect_leader,
+    sync_error_distribution, phase_coupling, tempo_negotiation,
+    sectional_balance, balance_deviation, ensemble_cohesion,
+    synchronization_over_time,
+)
