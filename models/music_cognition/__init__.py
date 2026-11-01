@@ -49,4 +49,6 @@ __all__ = [
     "AccentType", "PerceptualAccent", "MetricalGrid",
     "compute_syncopation", "compute_groove_complexity",
     "beat_induction", "phase_coherence", "PerceptualGrouping",
+    "SalienceMap", "spectral_salience", "onset_salience", "compute_salience_map",
+    "AuditoryStream", "stream_segregation", "attention_decay", "surprise_score",
 ]
