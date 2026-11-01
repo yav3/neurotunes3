@@ -1,4 +1,4 @@
-"""Music acoustics: psychoacoustic models, room acoustics, spatial audio."""
+"""Music acoustics: psychoacoustic models, room acoustics, spatial audio, spectral analysis."""
 from models.music_acoustics.psychoacoustics import (
     hz_to_mel, mel_to_hz, hz_to_bark, bark_to_hz, hz_to_erb, erb_to_hz,
     critical_bandwidth, EqualLoudnessPoint, equal_loudness_contour,
@@ -18,6 +18,13 @@ from models.music_acoustics.spatial_audio import (
     distance_attenuation, air_absorption_db,
     StereoPosition, constant_power_pan, hrtf_delay_model,
 )
+from models.music_acoustics.spectral_analysis import (
+    stft, istft, mel_filterbank, mel_spectrogram,
+    cqt_frequencies, constant_q_transform, chromagram,
+    spectral_centroid, spectral_spread, spectral_flatness,
+    spectral_rolloff, spectral_flux, compute_spectral_descriptors,
+    SpectralDescriptors,
+)
 
 __all__ = [
     "hz_to_mel", "mel_to_hz", "hz_to_bark", "bark_to_hz", "hz_to_erb", "erb_to_hz",
@@ -33,4 +40,9 @@ __all__ = [
     "AmbisonicsChannels", "foa_encode", "foa_decode_stereo", "binaural_pan",
     "distance_attenuation", "air_absorption_db",
     "StereoPosition", "constant_power_pan", "hrtf_delay_model",
+    "stft", "istft", "mel_filterbank", "mel_spectrogram",
+    "cqt_frequencies", "constant_q_transform", "chromagram",
+    "spectral_centroid", "spectral_spread", "spectral_flatness",
+    "spectral_rolloff", "spectral_flux", "compute_spectral_descriptors",
+    "SpectralDescriptors",
 ]
