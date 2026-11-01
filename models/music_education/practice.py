@@ -3,117 +3,92 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from typing import Any
 
 
 @dataclass
 class SkillRecord:
     name: str
+    level: float = 0.0
+    attempts: int = 0
+    successes: int = 0
+    last_practiced: float = 0.0
     ease_factor: float = 2.5
     interval_days: float = 1.0
-    repetitions: int = 0
-    last_score: float = 0.0
-
-    def next_review_interval(self, quality: int) -> float:
-        q = min(max(quality, 0), 5)
-        if q < 3:
-            self.repetitions = 0
-            self.interval_days = 1.0
-        else:
-            if self.repetitions == 0:
-                self.interval_days = 1.0
-            elif self.repetitions == 1:
-                self.interval_days = 6.0
-            else:
-                self.interval_days *= self.ease_factor
-            self.repetitions += 1
-        self.ease_factor = max(
-            1.3,
-            self.ease_factor + 0.1 - (5 - q) * (0.08 + (5 - q) * 0.02),
-        )
-        self.last_score = q / 5.0
-        return self.interval_days
 
 
 class SpacedRepetition:
+    def next_interval(self, record: SkillRecord, quality: int) -> float:
+        q = min(max(quality, 0), 5)
+        ef = record.ease_factor + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
+        ef = max(ef, 1.3)
+        if q < 3:
+            return 1.0
+        if record.attempts <= 1:
+            return 1.0
+        elif record.attempts == 2:
+            return 6.0
+        else:
+            return record.interval_days * ef
+
+    def update(self, record: SkillRecord, quality: int, current_day: float = 0.0) -> SkillRecord:
+        new_interval = self.next_interval(record, quality)
+        q = min(max(quality, 0), 5)
+        ef = record.ease_factor + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
+        return SkillRecord(
+            name=record.name,
+            level=min(record.level + (0.1 if quality >= 3 else -0.05), 1.0),
+            attempts=record.attempts + 1,
+            successes=record.successes + (1 if quality >= 3 else 0),
+            last_practiced=current_day,
+            ease_factor=max(ef, 1.3),
+            interval_days=new_interval,
+        )
+
+
+class SkillTracker:
     def __init__(self):
         self._skills: dict[str, SkillRecord] = {}
+        self._sr = SpacedRepetition()
 
     def add_skill(self, name: str) -> SkillRecord:
         if name not in self._skills:
             self._skills[name] = SkillRecord(name=name)
         return self._skills[name]
 
-    def review(self, name: str, quality: int) -> float:
-        skill = self._skills.get(name)
-        if skill is None:
-            skill = self.add_skill(name)
-        return skill.next_review_interval(quality)
+    def record_practice(self, name: str, quality: int, current_day: float = 0.0) -> SkillRecord:
+        if name not in self._skills:
+            self.add_skill(name)
+        self._skills[name] = self._sr.update(self._skills[name], quality, current_day)
+        return self._skills[name]
 
-    def due_skills(self, current_day: float = 0.0) -> list[str]:
+    def due_skills(self, current_day: float) -> list[SkillRecord]:
         due = []
-        for name, skill in self._skills.items():
-            if skill.repetitions == 0 or current_day >= skill.interval_days:
-                due.append(name)
-        return due
+        for rec in self._skills.values():
+            if current_day >= rec.last_practiced + rec.interval_days:
+                due.append(rec)
+        return sorted(due, key=lambda r: r.last_practiced)
 
-    @property
-    def skills(self) -> dict[str, SkillRecord]:
-        return dict(self._skills)
-
-
-class SkillTracker:
-    def __init__(self):
-        self._sessions: list[dict[str, Any]] = []
-        self._skill_scores: dict[str, list[float]] = {}
-
-    def log_session(self, skill: str, score: float, duration_min: float = 0.0) -> None:
-        self._sessions.append({
-            "skill": skill, "score": score, "duration_min": duration_min,
-        })
-        self._skill_scores.setdefault(skill, []).append(score)
-
-    def trend(self, skill: str, window: int = 5) -> float:
-        scores = self._skill_scores.get(skill, [])
-        if len(scores) < 2:
+    def overall_level(self) -> float:
+        if not self._skills:
             return 0.0
-        recent = scores[-window:]
-        if len(recent) < 2:
-            return 0.0
-        return recent[-1] - recent[0]
+        return sum(r.level for r in self._skills.values()) / len(self._skills)
 
-    def total_practice_minutes(self) -> float:
-        return sum(s.get("duration_min", 0.0) for s in self._sessions)
-
-    def average_score(self, skill: str) -> float:
-        scores = self._skill_scores.get(skill, [])
-        return sum(scores) / len(scores) if scores else 0.0
+    def get_skill(self, name: str) -> SkillRecord | None:
+        return self._skills.get(name)
 
 
 class PracticePlanner:
-    def __init__(self, daily_minutes: float = 60.0):
-        self._daily = daily_minutes
+    def __init__(self, session_minutes: int = 30):
+        self.session_minutes = session_minutes
 
-    def plan_session(
-        self, skills: list[str], priorities: dict[str, float] | None = None,
-    ) -> list[dict[str, float]]:
-        if not skills:
-            return []
-        prio = priorities or {}
-        total_weight = sum(prio.get(s, 1.0) for s in skills)
+    def plan(self, tracker: SkillTracker, current_day: float = 0.0) -> list[dict]:
+        due = tracker.due_skills(current_day)
+        if not due:
+            due = sorted(tracker._skills.values(), key=lambda r: r.level)
+        total_weight = sum(max(1.0 - r.level, 0.1) for r in due)
         plan = []
-        for s in skills:
-            w = prio.get(s, 1.0)
-            minutes = self._daily * w / total_weight
-            plan.append({"skill": s, "minutes": round(minutes, 1)})
+        for rec in due:
+            weight = max(1.0 - rec.level, 0.1)
+            minutes = max(5, int(self.session_minutes * weight / total_weight))
+            plan.append({"skill": rec.name, "minutes": minutes, "level": rec.level})
         return plan
-
-    def warmup_exercises(self, skill: str) -> list[str]:
-        warmups = {
-            "scales": ["chromatic scale", "major scale pattern", "minor scale pattern"],
-            "arpeggios": ["major triad arpeggio", "minor triad arpeggio", "7th arpeggio"],
-            "rhythm": ["metronome subdivision", "syncopation exercise"],
-            "sight_reading": ["interval recognition", "rhythm reading"],
-            "ear_training": ["interval singing", "chord quality identification"],
-        }
-        return warmups.get(skill, ["long tones", "slow scales"])
