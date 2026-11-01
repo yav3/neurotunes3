@@ -129,18 +129,7 @@ class FeaturePredictor(nn.Module):
 
 
 class MusicHybridModel(nn.Module):
-    """The complete music foundation–frontier hybrid model.
-
-    Forward pass:
-        1. Encode audio features → CLS repr + per-feature repr
-        2. Predict target mood/VAD scores
-        3. Predict target audio features
-        4. (Optional) Project CLS → frontier query features
-        5. Build governed answer
-
-    The model is trainable end-to-end on the foundation side.
-    The frontier bridge is non-differentiable (LLM reasoning).
-    """
+    """The complete music foundation–frontier hybrid model."""
 
     def __init__(self, config: MusicHybridConfig | None = None):
         super().__init__()

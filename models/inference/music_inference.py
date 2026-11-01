@@ -121,16 +121,7 @@ class MusicInferenceService:
         study_id: str = "",
         query_type: MusicQueryType | None = None,
     ) -> GovernedMusicAnswer:
-        """Run governed inference on a single audio feature vector.
-
-        Args:
-            features: (F,) or (1, F) audio feature values
-            hypothesis: what the model should reason about
-            domain: "music" or "therapeutic_audio"
-            regime: "data-driven", "prior-contrast", or "therapeutic"
-            study_id: pre-registered study ID
-            query_type: type of frontier query
-        """
+        """Run governed inference on a single audio feature vector."""
         if isinstance(features, np.ndarray):
             features = torch.from_numpy(features).float()
         if features.dim() == 1:

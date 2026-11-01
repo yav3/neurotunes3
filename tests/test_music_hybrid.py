@@ -55,7 +55,7 @@ from models.inference.music_inference import (
 )
 
 
-# ── Foundation encoder ────────────────────────────────────────────────────────
+# ── Foundation encoder ──────────────────────────────────────────────────────────────────────
 
 class TestMusicFoundationEncoder:
     def test_forward_shape(self):
@@ -125,7 +125,7 @@ class TestMaskedFeatureModeling:
         assert out["pred"].shape == (B, F)
 
 
-# ── Predictors ────────────────────────────────────────────────────────────
+# ── Predictors ──────────────────────────────────────────────────────────────────────────
 
 class TestMoodPredictor:
     def test_output_shapes(self):
@@ -146,7 +146,7 @@ class TestFeaturePredictor:
         assert out.shape == (4, 16)
 
 
-# ── Hybrid model ────────────────────────────────────────────────────────
+# ── Hybrid model ────────────────────────────────────────────────────────────────────────
 
 class TestMusicHybridModel:
     def _make_model(self):
@@ -221,7 +221,7 @@ class TestMusicHybridModel:
         assert counts["mood_predictor"] > 0
 
 
-# ── Bridge ──────────────────────────────────────────────────────────────
+# ── Bridge ──────────────────────────────────────────────────────────────────────────────
 
 class TestGovernedMusicBridge:
     def test_build_query(self):
@@ -314,7 +314,7 @@ class TestGovernedMusicBridge:
         assert len(bridge.lineage) == 2
 
 
-# ── Dataset ─────────────────────────────────────────────────────────────
+# ── Dataset ─────────────────────────────────────────────────────────────────────────────
 
 class TestMusicDataset:
     def test_synthetic_generation(self):
@@ -340,7 +340,7 @@ class TestMusicDataset:
         assert (data["target_mood"] <= 1).all()
 
 
-# ── Training pipeline ─────────────────────────────────────────────────────
+# ── Training pipeline ─────────────────────────────────────────────────────────────────
 
 class TestMusicTrainingPipeline:
     def test_governed_trial(self):
@@ -395,7 +395,7 @@ class TestMusicTrainingPipeline:
             assert answer.is_governed
 
 
-# ── Inference service ─────────────────────────────────────────────────────
+# ── Inference service ─────────────────────────────────────────────────────────────────
 
 class TestMusicInferenceService:
     def _make_service(self, tmpdir: str) -> MusicInferenceService:
@@ -476,7 +476,7 @@ class TestMusicInferenceService:
             )
 
 
-# ── Summariser ────────────────────────────────────────────────────────────
+# ── Summariser ──────────────────────────────────────────────────────────────────────────
 
 class TestMusicEmbeddingSummariser:
     def test_feature_delta(self):
