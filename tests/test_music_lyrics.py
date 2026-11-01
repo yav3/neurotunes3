@@ -135,13 +135,13 @@ class TestSentiment:
         from models.music_lyrics.sentiment import word_vad_lookup
         vad = word_vad_lookup("love")
         assert vad is not None
-        assert vad[0] > 0.8
+        assert vad[0] > 0.8  # high valence
 
     def test_word_vad_negative(self):
         from models.music_lyrics.sentiment import word_vad_lookup
         vad = word_vad_lookup("death")
         assert vad is not None
-        assert vad[0] < 0.2
+        assert vad[0] < 0.2  # low valence
 
     def test_word_vad_unknown(self):
         from models.music_lyrics.sentiment import word_vad_lookup
@@ -171,7 +171,7 @@ class TestSentiment:
         arc = emotion_arc(text, n_segments=4)
         assert len(arc) == 4
         assert all(len(point) == 3 for point in arc)
-        assert arc[0][0] > arc[2][0]
+        assert arc[0][0] > arc[2][0]  # positive start > negative middle
 
     def test_emotion_arc_empty(self):
         from models.music_lyrics.sentiment import emotion_arc
