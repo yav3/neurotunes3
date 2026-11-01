@@ -16,6 +16,13 @@ from models.music_analysis.tonality import (
     TonalityAnalyzer, HarmonicRhythm, chromatic_ratio, harmonic_change_rate,
 )
 
+from models.music_analysis.onset_detection import (
+    OnsetMethod, Onset, OnsetDetector,
+    spectral_flux as onset_spectral_flux,
+    high_frequency_content, complex_domain_odf,
+    energy_odf, phase_deviation_odf,
+    adaptive_threshold, pick_onsets, compute_odf,
+)
 from models.music_analysis.structure_segmentation import (
     SegmentType, Segment, self_similarity_matrix, novelty_curve,
     detect_boundaries, label_segments, repetition_structure,
@@ -32,4 +39,8 @@ __all__ = [
     "SegmentType", "Segment", "self_similarity_matrix", "novelty_curve",
     "detect_boundaries", "label_segments", "repetition_structure",
     "recurrence_plot", "lag_matrix",
+    "OnsetMethod", "Onset", "OnsetDetector",
+    "onset_spectral_flux", "high_frequency_content", "complex_domain_odf",
+    "energy_odf", "phase_deviation_odf",
+    "adaptive_threshold", "pick_onsets", "compute_odf",
 ]

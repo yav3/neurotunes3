@@ -21,6 +21,12 @@ from models.music_playlist.diversity import (
     decade_spread, mood_coverage, PlaylistDiversityReport,
     compute_diversity,
 )
+from models.music_playlist.sequencing import (
+    MixStrategy, CAMELOT_WHEEL, SequenceTrack, PlaylistSequencer,
+    camelot_compatible, camelot_distance, tempo_compatibility,
+    transition_score, greedy_sequence, tempo_ramp_sequence,
+    energy_arc_sequence,
+)
 
 __all__ = [
     "TransitionType",
@@ -35,4 +41,8 @@ __all__ = [
     "genre_diversity", "tempo_diversity", "artist_diversity",
     "decade_spread", "mood_coverage", "PlaylistDiversityReport",
     "compute_diversity",
+    "MixStrategy", "CAMELOT_WHEEL", "SequenceTrack", "PlaylistSequencer",
+    "camelot_compatible", "camelot_distance", "tempo_compatibility",
+    "transition_score", "greedy_sequence", "tempo_ramp_sequence",
+    "energy_arc_sequence",
 ]

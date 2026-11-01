@@ -40,3 +40,10 @@ from .evaluation import (
     ModelEvaluator, evaluate_retrieval, evaluate_classification, evaluate_embeddings,
 )
 from .checkpoint import save_checkpoint, load_checkpoint, save_npz, load_npz
+from .frontier_trainer import (
+    FrontierTrainerConfig, FrontierTrainer, AudioDataset, cosine_schedule,
+)
+from .audio_pipeline import (
+    AudioPipelineConfig, AudioSegmenter, AudioAugmenter, AudioPreprocessor,
+    SyntheticAudioGenerator,
+)

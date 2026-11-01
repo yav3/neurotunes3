@@ -18,6 +18,11 @@ from models.music_acoustics.spatial_audio import (
     distance_attenuation, air_absorption_db,
     StereoPosition, constant_power_pan, hrtf_delay_model,
 )
+from models.music_acoustics.noise_analysis import (
+    NoiseProfile, NoiseGate,
+    estimate_noise_floor, compute_snr, compute_snr_from_floor,
+    noise_profile, spectral_subtraction, a_weighting_snr,
+)
 from models.music_acoustics.spectral_analysis import (
     stft, istft, mel_filterbank, mel_spectrogram,
     cqt_frequencies, constant_q_transform, chromagram,
@@ -45,4 +50,7 @@ __all__ = [
     "spectral_centroid", "spectral_spread", "spectral_flatness",
     "spectral_rolloff", "spectral_flux", "compute_spectral_descriptors",
     "SpectralDescriptors",
+    "NoiseProfile", "NoiseGate",
+    "estimate_noise_floor", "compute_snr", "compute_snr_from_floor",
+    "noise_profile", "spectral_subtraction", "a_weighting_snr",
 ]
