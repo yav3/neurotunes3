@@ -30,6 +30,22 @@ from models.music_acoustics.spectral_analysis import (
     spectral_rolloff, spectral_flux, compute_spectral_descriptors,
     SpectralDescriptors,
 )
+from models.music_acoustics.instrument_acoustics import (
+    StringModel, PipeModel, MembraneModel, BarModel,
+    BESSEL_ZEROS_01, BESSEL_ZEROS_11, FREE_BAR_NODES,
+    string_overtone_series, string_decay_time,
+    pipe_resonance_frequencies, membrane_modes, bar_frequencies,
+    radiation_impedance, radiation_efficiency, coupling_coefficient,
+    inharmonicity_factor,
+)
+from models.music_acoustics.propagation import (
+    Medium, AIR_20C, WATER,
+    propagation_delay, inverse_square_attenuation,
+    atmospheric_absorption_coefficient, atmospheric_absorption,
+    ground_reflection_interference, diffraction_maekawa,
+    doppler_shift, outdoor_spl_at_distance,
+    reverb_time_sabine, reverb_time_eyring, critical_distance,
+)
 
 __all__ = [
     "hz_to_mel", "mel_to_hz", "hz_to_bark", "bark_to_hz", "hz_to_erb", "erb_to_hz",
@@ -53,4 +69,16 @@ __all__ = [
     "NoiseProfile", "NoiseGate",
     "estimate_noise_floor", "compute_snr", "compute_snr_from_floor",
     "noise_profile", "spectral_subtraction", "a_weighting_snr",
+    "StringModel", "PipeModel", "MembraneModel", "BarModel",
+    "BESSEL_ZEROS_01", "BESSEL_ZEROS_11", "FREE_BAR_NODES",
+    "string_overtone_series", "string_decay_time",
+    "pipe_resonance_frequencies", "membrane_modes", "bar_frequencies",
+    "radiation_impedance", "radiation_efficiency", "coupling_coefficient",
+    "inharmonicity_factor",
+    "Medium", "AIR_20C", "WATER",
+    "propagation_delay", "inverse_square_attenuation",
+    "atmospheric_absorption_coefficient", "atmospheric_absorption",
+    "ground_reflection_interference", "diffraction_maekawa",
+    "doppler_shift", "outdoor_spl_at_distance",
+    "reverb_time_sabine", "reverb_time_eyring", "critical_distance",
 ]

@@ -19,10 +19,11 @@ from .rights_management import (
     validate_splits, detect_conflicts, RoyaltyWaterfall,
     compute_waterfall, license_value_estimate, territory_overlap,
 )
-from .sync_licensing import (
-    MediaType, UsageType, SyncPlacement, CueSheet,
-    estimate_sync_fee, build_cue_sheet, placement_value_score,
-    territory_multiplier, catalog_sync_potential,
+from .analytics import (
+    Platform, PER_STREAM_RATES, StreamingMetrics,
+    engagement_score, estimated_revenue, artist_momentum_score,
+    growth_projection, viral_coefficient, catalog_health,
+    audience_concentration, listener_retention_curve, breakeven_analysis,
 )
 
 __all__ = [
@@ -37,22 +38,8 @@ __all__ = [
     "RightType", "LicenseType", "OwnershipShare", "License", "RightsBundle",
     "validate_splits", "detect_conflicts", "RoyaltyWaterfall",
     "compute_waterfall", "license_value_estimate", "territory_overlap",
-    "MediaType", "UsageType", "SyncPlacement", "CueSheet",
-    "estimate_sync_fee", "build_cue_sheet", "placement_value_score",
-    "territory_multiplier", "catalog_sync_potential",
-    "RevenueStream", "StreamingTier", "StreamingRate", "PLATFORM_RATES",
-    "streaming_revenue", "mechanical_royalty", "performance_royalty",
-    "RevenueProjection", "catalog_valuation", "breakeven_streams_for_cost", "blended_rate",
-    "ReleaseType", "RolloutPhase", "ReleaseWindow", "STANDARD_ROLLOUT", "ReleasePlan",
-    "optimal_release_day", "single_vs_album_roi", "playlist_pitch_score", "waterfall_schedule",
+    "Platform", "PER_STREAM_RATES", "StreamingMetrics",
+    "engagement_score", "estimated_revenue", "artist_momentum_score",
+    "growth_projection", "viral_coefficient", "catalog_health",
+    "audience_concentration", "listener_retention_curve", "breakeven_analysis",
 ]
-
-from .revenue_models import (
-    RevenueStream, StreamingTier, StreamingRate, PLATFORM_RATES,
-    streaming_revenue, mechanical_royalty, performance_royalty,
-    RevenueProjection, catalog_valuation, breakeven_streams_for_cost, blended_rate,
-)
-from .release_strategy import (
-    ReleaseType, RolloutPhase, ReleaseWindow, STANDARD_ROLLOUT, ReleasePlan,
-    optimal_release_day, single_vs_album_roi, playlist_pitch_score, waterfall_schedule,
-)
