@@ -16,11 +16,11 @@ from models.music_similarity.ssm_analysis import (
     form_similarity, symmetry_score, repetitiveness,
 )
 from models.music_similarity.structural_similarity import (
-    SectionType, FormSection, StructuralMatch,
-    chroma_cosine_similarity, form_edit_distance, normalized_form_similarity,
-    dtw_distance, qmax_similarity,
-    melodic_contour_similarity, rhythmic_pattern_similarity,
-    cover_song_score,
+    StructuralProfile,
+    section_label_edit_distance, normalised_edit_similarity,
+    proportion_vector, proportion_distance,
+    transition_matrix_from_labels, transition_matrix_distance,
+    structural_similarity, form_compatibility,
 )
 
 from models.music_similarity.sequence_alignment import (
@@ -36,11 +36,11 @@ from models.music_similarity.embedding_similarity import (
 )
 
 __all__ = [
-    "SectionType", "FormSection", "StructuralMatch",
-    "chroma_cosine_similarity", "form_edit_distance", "normalized_form_similarity",
-    "dtw_distance", "qmax_similarity",
-    "melodic_contour_similarity", "rhythmic_pattern_similarity",
-    "cover_song_score",
+    "StructuralProfile",
+    "section_label_edit_distance", "normalised_edit_similarity",
+    "proportion_vector", "proportion_distance",
+    "transition_matrix_from_labels", "transition_matrix_distance",
+    "structural_similarity", "form_compatibility",
     "StructuralSegment", "self_similarity_matrix", "recurrence_matrix",
     "diagonal_score", "find_repetitions", "novelty_curve",
     "segment_from_novelty", "label_segments", "form_string",
