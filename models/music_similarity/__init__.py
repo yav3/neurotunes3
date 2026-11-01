@@ -81,6 +81,16 @@ __all__ = [
     "key_similarity", "harmonic_rhythm_similarity",
     "tonal_similarity", "chroma_cross_correlation", "optimal_transposition",
     "pairwise_tonal_similarity",
+    "EmbeddingConfig", "MusicEmbedding", "SimilarityResult",
+    "es_cosine_similarity", "cosine_distance_matrix", "euclidean_distance_matrix",
+    "es_mahalanobis_distance", "normalize_embeddings",
+    "pca_reduce", "random_projection", "locality_sensitive_hash",
+    "knn_search", "approximate_nn",
+    "es_triplet_loss", "es_contrastive_loss",
+    "embedding_quality_metrics", "neighborhood_overlap",
+    "manifold_trustworthiness", "build_similarity_graph",
+    "hub_score", "hubness_skewness", "anti_hub_fraction",
+    "intrinsic_dimensionality", "isotropy_score", "alignment_uniformity",
 ]
 
 from models.music_similarity.audio_fingerprint_matching import (
@@ -127,4 +137,16 @@ from models.music_similarity.audio_fingerprint_matching import (
     build_hash_table, match_fingerprints,
     chroma_fingerprint, hamming_distance, chroma_match_score,
     bit_error_rate, robustness_score, discriminability,
+)
+from models.music_similarity.embedding_space import (
+    EmbeddingConfig, MusicEmbedding, SimilarityResult,
+    es_cosine_similarity, cosine_distance_matrix, euclidean_distance_matrix,
+    es_mahalanobis_distance, normalize_embeddings,
+    pca_reduce, random_projection, locality_sensitive_hash,
+    knn_search, approximate_nn,
+    es_triplet_loss, es_contrastive_loss,
+    embedding_quality_metrics, neighborhood_overlap,
+    manifold_trustworthiness, build_similarity_graph,
+    hub_score, hubness_skewness, anti_hub_fraction,
+    intrinsic_dimensionality, isotropy_score, alignment_uniformity,
 )
