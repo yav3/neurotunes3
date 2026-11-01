@@ -2,41 +2,30 @@
 import numpy as np
 import pytest
 
-# --- Copyright: fingerprinting ---
 from models.music_copyright.fingerprint import (
     SpectralPeak, FingerprintHash, FingerprintDatabase,
     find_spectral_peaks, generate_fingerprints, fingerprint_similarity,
 )
-
-# --- Copyright: sampling detection ---
 from models.music_copyright.sampling_detection import (
     SampleMatch, LoopDetection,
     cross_correlation_search, spectral_envelope, envelope_similarity,
     detect_pitch_shift, detect_time_stretch, detect_loops,
     find_sample_matches,
 )
-
-# --- Semantics: concept embedding ---
 from models.music_semantics.concept_embedding import (
     MusicalConcept, CONCEPT_REGISTRY, ConceptEmbedding,
     concept_similarity, nearest_concepts, analogy,
 )
-
-# --- Semantics: mood ontology ---
 from models.music_semantics.mood_ontology import (
     MOOD_TREE, MoodTrajectory,
     mood_distance, mood_ancestors, mood_from_vad, mood_from_features,
 )
-
-# --- Psychoacoustics: spatial hearing ---
 from models.music_psychoacoustics.spatial_hearing import (
     interaural_time_difference, interaural_level_difference,
     head_shadow_filter, distance_attenuation, air_absorption,
     generate_synthetic_hrtf, apply_hrtf,
     interaural_coherence, estimate_azimuth, binaural_cue_analysis,
 )
-
-# --- Psychoacoustics: timbre perception ---
 from models.music_psychoacoustics.timbre_perception import (
     spectral_centroid, spectral_spread, spectral_flatness,
     spectral_rolloff, spectral_flux,
@@ -45,8 +34,6 @@ from models.music_psychoacoustics.timbre_perception import (
     analyze_timbre, timbre_distance,
 )
 
-
-# ===== Fingerprinting =====
 
 class TestFingerprintPeaks:
     def test_peak_extraction(self):
@@ -107,8 +94,6 @@ class TestFingerprintSimilarity:
         assert fingerprint_similarity(a, b) == 0.0
 
 
-# ===== Sampling detection =====
-
 class TestCrossCorrelation:
     def test_finds_identical_segment(self):
         sr = 8000
@@ -159,7 +144,7 @@ class TestPitchShiftDetection:
 class TestLoopDetection:
     def test_detect_repeating_pattern(self):
         sr = 44100
-        loop_len = int(0.25 * sr)  # 250ms loop
+        loop_len = int(0.25 * sr)
         one_loop = np.sin(2 * np.pi * 440 * np.arange(loop_len) / sr)
         one_loop *= np.hanning(loop_len)
         signal = np.tile(one_loop, 8)
@@ -172,8 +157,6 @@ class TestLoopDetection:
         loops = detect_loops(signal, sr=44100, threshold=0.8)
         assert len(loops) == 0
 
-
-# ===== Concept embedding =====
 
 class TestConceptRegistry:
     def test_32_concepts(self):
@@ -191,7 +174,6 @@ class TestConceptSimilarity:
         assert abs(concept_similarity(c, c) - 1.0) < 0.01
 
     def test_same_category_closer(self):
-        """Concepts in the same category should have boosted dimensions."""
         melody = CONCEPT_REGISTRY["melody"]
         assert melody.category == "pitch"
         interval = CONCEPT_REGISTRY["interval"]
@@ -230,8 +212,6 @@ class TestConceptEmbedding:
         total = sum(len(v) for v in clusters.values())
         assert total == len(ce.concepts)
 
-
-# ===== Mood ontology =====
 
 class TestMoodTree:
     def test_24_moods(self):
@@ -289,8 +269,6 @@ class TestMoodTrajectory:
         assert arc == "rags_to_riches"
         assert sim > 0.5
 
-
-# ===== Spatial hearing =====
 
 class TestITD:
     def test_zero_at_front(self):
@@ -357,8 +335,6 @@ class TestBinauralCueAnalysis:
         assert abs(cues.ild_db) < 0.5
         assert cues.ic > 0.95
 
-
-# ===== Timbre perception =====
 
 class TestSpectralDescriptors:
     def test_centroid(self):
