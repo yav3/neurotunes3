@@ -1,4 +1,4 @@
-"""Music foundation model: two-tower encoder, decoder, tokenizer, training."""
+"""Music foundation model: two-tower encoder, decoder, tokenizer, diffusion, generation."""
 from .encoder import (
     EncoderConfig, LinearLayer, gelu, layer_norm, MultiHeadAttention,
     AudioEncoder, SemanticEncoder, GovernedBridge, MusicFoundationModel,
@@ -23,3 +23,15 @@ from .inference import (
 from .training import (
     TrainingConfig, TrainingMetrics, Trainer, cosine_lr, clip_gradients,
 )
+from .spectrogram import (
+    SpectrogramEncoderConfig, SpectrogramEncoder, SpectrogramDecoder,
+)
+from .conditioning import (
+    ConditioningConfig, ConditioningModule, FiLMLayer,
+    GenreEncoder, MoodEncoder, KeyEncoder, TempoEncoder, TagEncoder,
+    GENRES, MOODS, KEYS, MODES,
+)
+from .diffusion import (
+    DiffusionConfig, LatentDiffusionModel, NoisePredictor,
+)
+from .frontier import FrontierConfig, MusicFrontierModel
