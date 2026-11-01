@@ -52,6 +52,13 @@ from .audio_fingerprint_meta import (
     fingerprint_similarity, generate_spectral_hash,
     landmark_hash, decode_landmark_hash, match_fingerprints,
 )
+from .audio_metadata import (
+    AudioMetadata, TagMapping, STANDARD_TAGS,
+    parse_id3v2_tags, parse_vorbis_tags,
+    normalize_metadata, metadata_completeness, merge_metadata,
+    validate_isrc as validate_isrc_format,
+    validate_iswc as validate_iswc_format,
+)
 from .musicbrainz import (
     EntityType as MBEntityType, ArtistType as MBArtistType,
     ReleaseType as MBReleaseType, RelationshipType as MBRelationshipType,
@@ -59,4 +66,18 @@ from .musicbrainz import (
     MBEntity as MBEntityFull, Artist as MBArtist,
     Recording as MBRecording2, Work as MBWork2, Release as MBRelease2,
     Relationship as MBRelationship, EntityGraph,
+)
+from .fingerprint import (
+    Landmark, MatchResult,
+    find_spectral_peaks, generate_landmarks, hash_landmark,
+    build_fingerprint_db, query_fingerprint,
+)
+from .tag_inference import (
+    TagPrediction,
+    infer_genre_tags, infer_mood_tags, infer_instrument_tags,
+    infer_era_tags, combine_tag_predictions,
+)
+from .normalization import (
+    normalize_key_signature, normalize_tempo, normalize_duration,
+    validate_metadata_schema, merge_metadata,
 )
