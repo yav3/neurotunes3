@@ -16,3 +16,10 @@ from .positional import (
     sinusoidal_encoding, RotaryPositionalEncoding, TemporalEncoding, RelativePositionBias,
 )
 from .trainer import TrainerConfig, MusicTrainer, EarlyStopping, TrainingHistory
+from .inference import (
+    InferenceConfig, InferenceResult, GenreHead, MoodHead, VADHead,
+    MusicInferencePipeline,
+)
+from .training import (
+    TrainingConfig, TrainingMetrics, Trainer, cosine_lr, clip_gradients,
+)
